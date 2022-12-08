@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="cadf110e-385c-4c7c-92bb-c5e042ab0fc3" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="60a61343-53c4-457d-9a4e-e2dd203e8dc3" >
+		<s3:connection region="sa-east-1" accessKey="AKIAQ6DJB4X3FE77J3EG" secretKey="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" />
+	</s3:config>
+	<flow name="putobjectFlow" doc:id="f52c367c-9884-4cc3-b7b4-0f05157913b6" >
+		<http:listener doc:name="Listener" doc:id="9d330f9b-2636-4dc7-893b-08672eef0219" config-ref="HTTP_Listener_config" path="/put"/>
+		<s3:put-object doc:name="Put Object" doc:id="92e079fd-e416-4f64-955b-714d1cd33495" config-ref="Amazon_S3_Configuration" key="Amazon" bucketName="pavanipulikam.techbulls"/>
+		<set-payload value="welcome to aws" doc:name="Set Payload" doc:id="6255c249-673e-4dd6-9668-876118b97a67" />
+	</flow>
+</mule>
